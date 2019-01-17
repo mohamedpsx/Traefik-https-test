@@ -21,7 +21,7 @@ services:
     ports:
       - "3000:3000"
     labels:
-      - "traefik.frontend.rule=Host:meriem.halloul.xyz" #change this according to your domain/subdomain
+      - "traefik.frontend.rule=Host:app1.halloul.xyz" #change this according to your domain/subdomain
       - "traefik.frontend.entryPoints=http,https"
 
 
@@ -30,5 +30,5 @@ services:
     ports:
       - "9090:80"
     labels:
-      - "traefik.frontend.rule=Host:ousama.halloul.xyz" #change this according to your domain/subdomain
+      - "traefik.frontend.rule=Host:app2.halloul.xyz" #change this according to your domain/subdomain
       - "traefik.frontend.entryPoints=http,https"

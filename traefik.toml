@@ -26,5 +26,6 @@ onHostRule = true
 
 
 [[acme.domains]]
+#change this to your domain/sub domains
 main = "*.halloul.xyz" # main certificate (let's encrypt support wildcard)
 sans = ["halloul.xyz"] # root domain should be included with other sub-domains if needed
