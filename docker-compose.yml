@@ -1,0 +1,34 @@
+version: '3'
+
+services:
+  proxy:
+    image: traefik # The official Traefik docker image
+    command: --api --docker # Enables the web UI and tells Traefik to listen to docker
+    ports:
+      - "80:80"     # The HTTP port
+      - "8080:8080" # The Web UI (enabled by --api)
+      - "443:443" #https
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock # So that Traefik can listen to the Docker events
+      - ~/src/traefik/traefik.toml:/traefik.toml
+      - ~/src/traefik/cert:/etc/traefik/cert
+    # CF email and key will be loaded from the cloudflare.env
+    env_file:
+      - cloudflare.env
+
+  nodejs:
+    image: heroku/nodejs-hello-world # nodejs app
+    ports:
+      - "3000:3000"
+    labels:
+      - "traefik.frontend.rule=Host:meriem.halloul.xyz" #change this according to your domain/subdomain
+      - "traefik.frontend.entryPoints=http,https"
+
+
+  whoami:
+    image: emilevauge/whoami #whoami container
+    ports:
+      - "9090:80"
+    labels:
+      - "traefik.frontend.rule=Host:ousama.halloul.xyz" #change this according to your domain/subdomain
+      - "traefik.frontend.entryPoints=http,https"

@@ -1,0 +1,30 @@
+
+debug = true #for debugging and setting loglevel to debug
+watch = true # this will enable dynamic configs (hot reload) for (frontends, backends, https certificates)
+
+#entry points and ports config
+defaultEntryPoints = ["http", "https"]
+[entryPoints]
+  [entryPoints.http]
+  address = ":80"
+   #This will enable auto redirect from http to https for any incoming request
+   #[entryPoints.http.redirect]
+   #entryPoint = "https"
+  [entryPoints.https]
+  address = ":443"
+  [entryPoints.https.tls]
+  
+[acme]
+entryPoint = "https"
+acmeLogging = true
+email = "my@email.com" #chaneg this to your email for let's encrypt certs
+storage = "/etc/traefik/cert/acme.json"
+onHostRule = true
+    [acme.dnsChallenge]
+    provider = "cloudflare" # Check other providers @ https://docs.traefik.io/configuration/acme/
+    delayBeforeCheck = 0
+
+
+[[acme.domains]]
+main = "*.halloul.xyz" # main certificate (let's encrypt support wildcard)
+sans = ["halloul.xyz"] # root domain should be included with other sub-domains if needed
